@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { DocumentService } from "./document.service";
-import type { Doc } from "./types";
+import { documentFactory } from "./document.factory";
+import { DocumentService } from "../document.service";
+import type { Doc } from "../types";
 
-const mockDocs: Partial<Doc>[] = [
-  { ID: "1", Title: "Document 1" },
-  { ID: "2", Title: "Document 2" },
+const mockDocs: Doc[] = [
+  documentFactory.build({ Title: "Document 1" }),
+  documentFactory.build({ Title: "Document 2" }),
 ];
 
 describe("DocumentService", () => {

@@ -9,6 +9,7 @@ import { LayoutStore } from "../../home.store";
 let container: HTMLElement;
 let documentStore: DocumentStore;
 let layoutStore: LayoutStore;
+let openModalFn: () => void;
 
 beforeEach(() => {
   document.body.innerHTML = "";
@@ -17,6 +18,7 @@ beforeEach(() => {
 
   documentStore = new DocumentStore();
   layoutStore = new LayoutStore();
+  openModalFn = () => null
 });
 
 describe("DocumentTable", () => {
@@ -27,7 +29,7 @@ describe("DocumentTable", () => {
     ];
     documentStore.set(docs);
 
-    const table = new DocumentTable({ documentStore, layoutStore });
+    const table = new DocumentTable({ documentStore, layoutStore, openModalFn });
     table.mount(container);
 
     await waitFor(() => {
@@ -48,7 +50,7 @@ describe("DocumentTable", () => {
     ];
 
     documentStore.set(initial);
-    const table = new DocumentTable({ documentStore, layoutStore });
+    const table = new DocumentTable({ documentStore, layoutStore, openModalFn });
     table.mount(container);
 
     expect(screen.getByText("One")).not.toBeNull();

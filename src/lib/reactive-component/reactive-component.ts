@@ -10,7 +10,7 @@ export abstract class ReactiveComponent<
     this.store.subscribe(() => this.update());
   }
 
-  private update() {
+  protected update() {
     if (
       this.root instanceof HTMLElement ||
       this.root instanceof DocumentFragment

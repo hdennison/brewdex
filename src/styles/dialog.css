@@ -1,0 +1,37 @@
+@layer reset {
+  dialog {
+    appearance: none;
+  }
+}
+
+@layer base {
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  dialog[open] {
+    background: var(--color-surface-bg);
+    padding: var(--space-md);
+    max-height: 100dvh;
+    width: 640px;
+    max-width: 100dvw;
+
+    overflow: auto;
+    border-radius: var(--radii-md);
+    border: 0;
+    place-self: center;
+  }
+
+  dialog[open]::backdrop {
+    background-color: rgba(0 0 0 / 70%);
+  }
+
+  dialog header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    justify-content: space-between;
+  }
+}

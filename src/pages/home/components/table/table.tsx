@@ -7,10 +7,19 @@ import { getRelativeTimeFromNow } from "@/lib/date/date";
 
 export class DocumentTable extends ReactiveComponent<DocumentStore> {
   private layoutStore: LayoutStore;
+  private openModalFn: () => void;
 
-  constructor(props: { documentStore: DocumentStore; layoutStore: LayoutStore }) {
+  constructor(props: {
+    documentStore: DocumentStore;
+    layoutStore: LayoutStore,
+    openModalFn: () => void
+  }) {
     super({ store: props.documentStore });
+
     this.layoutStore = props.layoutStore;
+    this.openModalFn = props.openModalFn;
+
+    console.log(this.openModalFn)
 
     this.root = (
       <table
@@ -63,6 +72,11 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
               </td>
             </tr>
           ))}
+          {/* <tr>
+            <button type="button" aria-label="Add a new document" className={styles.addButton} onClick={this.openModalFn}>
+              + Add document
+            </button>
+          </tr> */}
         </tbody>
       </>
     );

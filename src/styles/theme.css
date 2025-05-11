@@ -1,0 +1,52 @@
+:root {
+  /* COLORS */
+  /* Note: I'm following the design colors, although a11y tools show a lot of contrast issues */
+
+  /* Primitives */
+  --color-black: #fff;
+  --color-white: #fff;
+  --color-blue: #4c87ef;
+
+  /* Semantic */
+  --color-accent: var(--color-blue);
+
+  --color-body-bg: #edeff3;
+  --color-body-text: #2e394a;
+  --color-body-text-light: #a0a0a0;
+
+  --color-surface-bg: var(--color-white);
+  --color-surface-border: rgba(0 0 0 / 10%);
+  --color-surface-text-: #2f3a4b;
+  --color-surface-text-light: #676767;
+
+  /* FONTS */
+  /* Font-size */
+  --text-heading-1: 1.75rem;
+  --text-body: 0.875rem;
+
+  /* Line-height */
+  --leading-body: 1.5;
+  --leading-headings: 1;
+
+  /* Font-family */
+  --font-body: system-ui, sans-serif;
+  --font-headings: system-ui, sans-serif;
+
+  /* Font-weight */
+  --font-bold: 600;
+  --font-semibold: 500;
+  --font-normal: 400;
+
+  /* Spaces */
+  --space-base: 0.25rem;
+
+  --space-xs: calc(var(--space-base) * 2);
+  --space-sm: calc(var(--space-base) * 3);
+  --space-md: calc(var(--space-base) * 4);
+  --space-lg: calc(var(--space-base) * 5);
+  --space-xl: calc(var(--space-base) * 6);
+  --space-2xl: calc(var(--space-base) * 8);
+
+  /* Radii */
+  --radii-md: var(--space-base);
+}

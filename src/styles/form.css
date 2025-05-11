@@ -1,0 +1,26 @@
+@layer reset {
+  select {
+    background: none;
+    border: none;
+    font: inherit;
+    padding: 0;
+  }
+}
+
+@layer components {
+  select {
+    color: var(--color-accent);
+    padding: var(--space-xs) var(--space-sm);
+    appearance: base-select;
+    display: inline-flex;
+    align-items: center;
+    font-weight: var(--font-semibold);
+  }
+
+  select::picker-icon {
+    content: "^";
+    rotate: 180deg;
+    height: var(--space-md);
+    transform: scaleX(1.4);
+  }
+}

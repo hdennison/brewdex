@@ -1,0 +1,39 @@
+@layer reset {
+  table {
+    width: 100%;
+  }
+
+  th {
+    all: unset;
+  }
+}
+
+@layer components {
+  .table {
+    --table-gap: var(--space-sm);
+    --item--padding: var(--space-lg);
+    --item-cols: 3; /* @TODO: this should be passed as param */
+    --grid-cols: 1;
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(var(--item-cols), 1fr);
+    }
+
+    tbody {
+      display: grid;
+      gap: var(--table-gap);
+      grid-template-columns: repeat(var(--grid-cols), 1fr);
+
+      .cell {
+        border: var(--item--padding) solid transparent;
+      }
+    }
+    thead {
+      .cell {
+        border-inline: var(--item--padding) solid transparent;
+        border-block: var(--table-gap) solid transparent;
+      }
+    }
+  }
+}

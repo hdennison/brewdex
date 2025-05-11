@@ -1,0 +1,31 @@
+@import "./form.css";
+@import "./reset.css";
+@import "./table.css";
+@import "./theme.css";
+
+@layer reset, base, components, utilities;
+
+@layer base {
+  html {
+    font-size: 1rem;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--color-body-bg);
+    color: var(--color-body-text);
+    font: var(--font-normal) var(--text-body) / var(--leading-body)
+      var(--font-body);
+    min-width: 320px;
+    max-width: 100dvw;
+  }
+
+  #app {
+    margin: 0 auto;
+    max-width: 1280px;
+  }
+}
+
+h1 {
+  font-size: var(--text-heading-1);
+}

@@ -1,0 +1,24 @@
+.main {
+  --inline-margin: var(--space-xs);
+  --top-margin: var(--space-xl);
+
+  margin: var(--top-margin) var(--inline-margin) var(--space-xl);
+
+  h1 {
+    margin-block-end: var(--space-md);
+  }
+}
+
+.document {
+  background: var(--color-surface-bg);
+  border-radius: var(--radii-md);
+  border: 1px solid var(--color-surface-border);
+}
+
+/* TODO find a better way to manage MediaQueries */
+@media screen and (min-width: 640px) {
+  .main {
+    --inline-margin: var(--space-xl);
+    --top-margin: calc(var(--space-base) * 28);
+  }
+}

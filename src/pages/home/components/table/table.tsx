@@ -1,6 +1,7 @@
-
 import { ReactiveComponent } from "@/lib/reactive-component/reactive-component";
 import { DocumentStore } from "@/modules/document/document.store";
+
+import styles from '../../home.module.css'
 
 export class DocumentTable extends ReactiveComponent<DocumentStore> {
   constructor(props: { store: DocumentStore }) {
@@ -31,7 +32,7 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
         </thead>
         <tbody>
           {docs.map((item) => (
-            <tr className="row">
+            <tr className={`row ${styles.document}`}>
               <td className="cell">
                 <strong>{item.Title}</strong>
                 <div>Created: {item.CreatedAt}</div>

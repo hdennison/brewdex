@@ -30,3 +30,12 @@
 h1 {
   font-size: var(--text-heading-1);
 }
+
+@layer utilities {
+  .flex {
+    display: flex;
+  }
+  .flex-1 {
+    flex: 1;
+  }
+}

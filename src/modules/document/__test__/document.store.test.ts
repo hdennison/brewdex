@@ -1,63 +1,131 @@
 import { describe, it, expect, beforeEach } from "vitest";
-
-import { documentFactory } from "@/modules/document/__test__/document.factory";
 import { DocumentStore } from "../document.store";
+import type { Doc } from "../types";
 
-describe("DocumentStore.sortBy", () => {
+describe("DocumentStore", () => {
   let store: DocumentStore;
+  let docA: Doc, docB: Doc, docC: Doc, docD: Doc, docE: Doc;
 
   beforeEach(() => {
     store = new DocumentStore();
+    docA = {
+      ID: "1",
+      Title: "Alpha",
+      Version: "1.0.0",
+      CreatedAt: "2020-01-01T00:00:00Z",
+      Contributors: [],
+      Attachments: [],
+    };
+    docB = {
+      ID: "2",
+      Title: "Beta",
+      Version: "1.1.0",
+      CreatedAt: "2020-06-01T00:00:00Z",
+      Contributors: [],
+      Attachments: [],
+    };
+    docC = {
+      ID: "3",
+      Title: "Gamma",
+      Version: "2.0.0",
+      CreatedAt: "2021-01-01T00:00:00Z",
+      Contributors: [],
+      Attachments: [],
+    };
+    docD = {
+      ID: "4",
+      Title: "Delta",
+      Version: "1.0.1",
+      CreatedAt: "2020-02-01T00:00:00Z",
+      Contributors: [],
+      Attachments: [],
+    };
+    docE = {
+      ID: "5",
+      Title: "Epsilon",
+      Version: "1.0.5",
+      CreatedAt: "2020-03-01T00:00:00Z",
+      Contributors: [],
+      Attachments: [],
+    };
+    // start with A, B, C by default
+    store.set([docA, docB, docC]);
   });
 
-  function getTitles(): string[] {
-    return store.get().map((d) => d.Title);
-  }
-
-  it("sorts documents by title", () => {
-    store.set([
-      documentFactory.build({ Title: "Zebra" }),
-      documentFactory.build({ Title: "Alpha" }),
-      documentFactory.build({ Title: "Lemon" }),
-    ]);
-
+  it('sortBy "title" orders documents alphabetically by Title', () => {
+    store.set([docC, docA, docB]);
     store.sortBy("title");
-
-    expect(getTitles()).toEqual(["Alpha", "Lemon", "Zebra"]);
+    const titles = store.get().map((d) => d.Title);
+    expect(titles).toEqual(["Alpha", "Beta", "Gamma"]);
   });
 
-  it("sorts documents by version", () => {
-    store.set([
-      documentFactory.build({ Title: "Doc C", Version: "2.1.0" }),
-      documentFactory.build({ Title: "Doc A", Version: "1.0.5" }),
-      documentFactory.build({ Title: "Doc B", Version: "1.0.10" }),
-    ]);
-
+  it('sortBy "version" orders by semantic Version then Title', () => {
+    store.set([docB, docC, docA, docD]);
     store.sortBy("version");
+    const versions = store.get().map((d) => d.Version);
+    expect(versions).toEqual(["1.0.0", "1.0.1", "1.1.0", "2.0.0"]);
 
-    expect(getTitles()).toEqual(["Doc A", "Doc B", "Doc C"]);
-  });
-
-  it("falls back to title when versions are equal", () => {
-    store.set([
-      documentFactory.build({ Title: "Bravo", Version: "1.0.0" }),
-      documentFactory.build({ Title: "Alpha", Version: "1.0.0" }),
-    ]);
-
+    // test fallback to Title when versions equal
+    const docX: Doc = { ...docA, ID: "6", Title: "Zeta" };
+    const docY: Doc = { ...docA, ID: "7", Title: "Eta" };
+    store.set([docX, docY]);
     store.sortBy("version");
-
-    expect(getTitles()).toEqual(["Alpha", "Bravo"]);
+    const titles = store.get().map((d) => d.Title);
+    expect(titles).toEqual(["Eta", "Zeta"]);
   });
 
-  it("sorts documents by CreatedAt date", () => {
-    store.set([
-      documentFactory.build({ Title: "Newest", CreatedAt: "2024-01-10" }),
-      documentFactory.build({ Title: "Oldest", CreatedAt: "2022-05-20" }),
-      documentFactory.build({ Title: "Middle", CreatedAt: "2023-03-01" }),
-    ]);
-
+  it('sortBy "date" orders by CreatedAt lex order', () => {
+    store.set([docB, docC, docA, docD]);
     store.sortBy("creationDate");
+    const dates = store.get().map((d) => d.CreatedAt);
+    expect(dates).toEqual([
+      "2020-01-01T00:00:00Z",
+      "2020-02-01T00:00:00Z",
+      "2020-06-01T00:00:00Z",
+      "2021-01-01T00:00:00Z",
+    ]);
+  });
 
-    expect(getTitles()).toEqual(["Oldest", "Middle", "Newest"]);
+  it("add() appends when no sortBy has been called", () => {
+    // new clean store
+    store = new DocumentStore();
+    store.set([docA]);
+    store.add(docB);
+    expect(store.get()).toEqual([docA, docB]);
+  });
+
+  it('add() inserts in correct position after sortBy "title"', () => {
+    // current store is [Alpha, Beta, Gamma]
+    store.sortBy("title");
+    // add Delta => should go between Beta and Gamma
+    store.add(docD);
+    const titles = store.get().map((d) => d.Title);
+    expect(titles).toEqual(["Alpha", "Beta", "Delta", "Gamma"]);
+  });
+
+  it('add() inserts in correct position after sortBy "version"', () => {
+    store.set([docA, docB, docC, docD]);
+    store.sortBy("version"); // now [1.0.0,1.0.1,1.1.0,2.0.0]
+    store.add(docE); // 1.0.5 between 1.0.1 and 1.1.0
+    const versions = store.get().map((d) => d.Version);
+    expect(versions).toEqual(["1.0.0", "1.0.1", "1.0.5", "1.1.0", "2.0.0"]);
+  });
+
+  it('add() inserts in correct position after sortBy "date"', () => {
+    store.set([docA, docB, docC]);
+    store.sortBy("creationDate"); // [2020-01-01,2020-06-01,2021-01-01]
+    const newDoc: Doc = {
+      ...docA,
+      ID: "8",
+      CreatedAt: "2020-03-15T00:00:00Z",
+    };
+    store.add(newDoc);
+    const dates = store.get().map((d) => d.CreatedAt);
+    expect(dates).toEqual([
+      "2020-01-01T00:00:00Z",
+      "2020-03-15T00:00:00Z",
+      "2020-06-01T00:00:00Z",
+      "2021-01-01T00:00:00Z",
+    ]);
   });
 });

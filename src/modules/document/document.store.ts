@@ -15,27 +15,34 @@ function compareVersions(a: Doc, b: Doc) {
     if (na < nb) return -1;
     if (na > nb) return 1;
   }
-  // If same Version, sort by Title
   return compareTitles(a, b);
 }
 
 function compareDates(a: Doc, b: Doc) {
-  // simple (but not 100% precise) date comparison
   return a.CreatedAt.localeCompare(b.CreatedAt);
 }
 
 export class DocumentStore extends Store<Doc> {
+  private lastSort: SortingCriteria | null = null;
+
   sortBy(criteria: SortingCriteria) {
+    this.lastSort = criteria;
     this.update((docs) => {
-      return [...docs].sort((a, b) => {
-        if (criteria === "title") {
-          return compareTitles(a, b);
-        } else if (criteria === "version") {
-          return compareVersions(a, b);
-        } else {
-          return compareDates(a, b);
-        }
-      });
+      return [...docs].sort(this.getComparator(criteria));
     });
+  }
+
+  add(doc: Doc) {
+    const docs = [...this.get(), doc];
+    if (this.lastSort) {
+      docs.sort(this.getComparator(this.lastSort));
+    }
+    this.set(docs);
+  }
+
+  private getComparator(criteria: SortingCriteria) {
+    if (criteria === "title") return compareTitles;
+    if (criteria === "version") return compareVersions;
+    return compareDates;
   }
 }

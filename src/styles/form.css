@@ -1,5 +1,11 @@
 @layer reset {
+  fieldset {
+    padding: var(---space-xs) var(--space-md);
+  }
+
+  input,
   button,
+  textarea,
   select {
     background: none;
     border: none;
@@ -35,5 +41,39 @@
     rotate: 180deg;
     height: var(--space-md);
     transform: scaleX(1.4);
+  }
+
+  input {
+    /* @TODO theme.css grayscale */
+    border: 1px solid #ccc;
+    line-height: 1.5;
+    padding: var(--space-sm);
+    border-radius: var(--radii-md);
+  }
+
+  option:checked {
+    font-weight: bold;
+  }
+
+  fieldset {
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+  }
+
+  legend {
+    font-weight: var(--font-bold);
+    padding: var(--space-xs);
+  }
+
+  .form-item {
+    display: grid;
+
+    label {
+      margin-block-end: var(--space-base);
+    }
+
+    & + & {
+      margin-block-start: var(--space-md);
+    }
   }
 }

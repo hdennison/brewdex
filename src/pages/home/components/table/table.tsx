@@ -19,8 +19,6 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
     this.layoutStore = props.layoutStore;
     this.openModalFn = props.openModalFn;
 
-    console.log(this.openModalFn)
-
     this.root = (
       <table
         aria-live="polite"
@@ -72,11 +70,11 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
               </td>
             </tr>
           ))}
-          {/* <tr>
+          <tr>
             <button type="button" aria-label="Add a new document" className={styles.addButton} onClick={this.openModalFn}>
               + Add document
             </button>
-          </tr> */}
+          </tr>
         </tbody>
       </>
     );

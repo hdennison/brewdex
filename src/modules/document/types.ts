@@ -15,3 +15,5 @@ export type Doc = {
   Contributors: Contributor[];
   Attachments: string[];
 };
+
+export type SortingCriteria = "title" | "version" | "creationDate";

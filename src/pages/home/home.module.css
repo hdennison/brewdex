@@ -3,9 +3,20 @@
   --top-margin: var(--space-xl);
 
   margin: var(--top-margin) var(--inline-margin) var(--space-xl);
+}
 
-  h1 {
-    margin-block-end: var(--space-md);
+.title {
+  margin-block-end: var(--space-md);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: var(--space-base);
+
+  button {
+    padding: var(--space-base);
   }
 }
 

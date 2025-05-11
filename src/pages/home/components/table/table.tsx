@@ -1,23 +1,35 @@
 import { ReactiveComponent } from "@/lib/reactive-component/reactive-component";
 import { DocumentStore } from "@/modules/document/document.store";
+import type { LayoutStore } from "../../home.store";
 
 import styles from '../../home.module.css'
 
 export class DocumentTable extends ReactiveComponent<DocumentStore> {
-  constructor(props: { store: DocumentStore }) {
-    super(props)
+  private layoutStore: LayoutStore;
+
+  constructor(props: { documentStore: DocumentStore; layoutStore: LayoutStore }) {
+    super({ store: props.documentStore });
+    this.layoutStore = props.layoutStore;
 
     this.root = (
       <table
         aria-live="polite"
         className="table"
         aria-labelledby="page-heading"
+        data-layout={this.layoutStore.get()}
+        // this CSS var needs to match the amount of columns in the table
+        style="--columns: 3"
       />
     );
+
+    this.layoutStore.subscribe(() => {
+      if (this.root instanceof HTMLElement) {
+        this.root.setAttribute("data-layout", String(this.layoutStore.get()));
+      }
+    });
   }
 
   render(): Node {
-
     const docs = this.store.get();
 
     return (
@@ -52,6 +64,6 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
           ))}
         </tbody>
       </>
-    )
+    );
   }
 }

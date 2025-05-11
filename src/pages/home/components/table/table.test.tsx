@@ -3,16 +3,20 @@ import { DocumentStore } from "@/modules/document/document.store";
 import { beforeEach, describe, expect, it } from "vitest";
 import { documentFactory } from "@/modules/document/__test__/document.factory";
 import { DocumentTable } from "./table";
+import { LayoutStore } from "../../home.store";
+
 
 let container: HTMLElement;
-let store: DocumentStore;
+let documentStore: DocumentStore;
+let layoutStore: LayoutStore;
 
 beforeEach(() => {
   document.body.innerHTML = "";
   container = document.createElement("div");
   document.body.appendChild(container);
 
-  store = new DocumentStore();
+  documentStore = new DocumentStore();
+  layoutStore = new LayoutStore();
 });
 
 describe("DocumentTable", () => {
@@ -21,9 +25,9 @@ describe("DocumentTable", () => {
       documentFactory.build({ Title: "Alpha" }),
       documentFactory.build({ Title: "Beta" }),
     ];
-    store.set(docs);
+    documentStore.set(docs);
 
-    const table = new DocumentTable({ store });
+    const table = new DocumentTable({ documentStore, layoutStore });
     table.mount(container);
 
     await waitFor(() => {
@@ -43,13 +47,13 @@ describe("DocumentTable", () => {
       documentFactory.build({ Title: "Two" }),
     ];
 
-    store.set(initial);
-    const table = new DocumentTable({ store });
+    documentStore.set(initial);
+    const table = new DocumentTable({ documentStore, layoutStore });
     table.mount(container);
 
     expect(screen.getByText("One")).not.toBeNull();
 
-    store.set(updated);
+    documentStore.set(updated);
 
     await waitFor(() => {
       expect(screen.queryByText("One")).toBeNull();

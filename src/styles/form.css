@@ -1,4 +1,5 @@
 @layer reset {
+  button,
   select {
     background: none;
     border: none;
@@ -8,9 +9,21 @@
 }
 
 @layer components {
+  button {
+    font-weight: var(--font-semibold);
+  }
+
+  button[aria-pressed="true"] {
+    opacity: 0.5;
+  }
+
+  button,
   select {
     color: var(--color-accent);
     padding: var(--space-xs) var(--space-sm);
+  }
+
+  select {
     appearance: base-select;
     display: inline-flex;
     align-items: center;

@@ -12,7 +12,7 @@
   .table {
     --table-gap: var(--space-sm);
     --item--padding: var(--space-lg);
-    --item-cols: 3; /* @TODO: this should be passed as param */
+    --item-cols: var(--columns);
     --grid-cols: 1;
 
     .row {
@@ -34,6 +34,19 @@
         border-inline: var(--item--padding) solid transparent;
         border-block: var(--table-gap) solid transparent;
       }
+    }
+  }
+
+  .table[data-layout="grid"] {
+    --item-cols: 1;
+    --grid-cols: var(--columns);
+
+    thead {
+      display: none;
+    }
+
+    td {
+      text-align: center;
     }
   }
 }

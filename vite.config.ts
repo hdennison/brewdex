@@ -8,6 +8,11 @@ export default defineConfig({
   build: {
     minify: "esbuild",
   },
+  esbuild: {
+    jsxFactory: "h",
+    jsxFragment: "Fragment",
+    jsxInject: `import { h, Fragment } from '@/lib/jsx/jsx-runtime'`,
+  },
   resolve: {
     alias: { "@": "/src" },
     extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -22,7 +27,7 @@ export default defineConfig({
     include: ["src/**/*.test.{ts,tsx}"],
     coverage: {
       include: ["src/**/*"],
-      exclude: ["src/main.ts", "src/*.d.ts"],
+      exclude: ["src/main.tsx", "src/*.d.ts", "src/**/types.ts"],
     },
   },
 });

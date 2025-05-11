@@ -21,7 +21,23 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "types": ["vite/client"]
+    // Testing
+    "types": ["vite/client"],
+
+    /* Absolute paths */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* JSX */
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
   },
-  "include": ["src", "vite.config.ts", "src/vitest-globals.d.ts"]
+  "include": [
+    "src",
+    "vite.config.ts",
+    "src/vitest-globals.d.ts",
+    "src/jsx.d.ts"
+  ]
 }

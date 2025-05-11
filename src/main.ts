@@ -1,4 +1,4 @@
-import { setupCounter } from "./counter.ts";
+import { setupCounter } from "./components/counter.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>

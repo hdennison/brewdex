@@ -1,21 +1,22 @@
-import { CounterDisplay } from "@/components/counter/counter"
-import { Store } from "@/lib/store/store"
+import { DocumentService } from "@/modules/document/document.service";
+import type { Doc } from "@/modules/document/types";
 
+export default async function HomePage() {
+  const api = new DocumentService();
+  let documents: Doc[] = []
 
-
-export default function HomePage() {
-  const counterStore = new Store<number>([0]);
-
-  const increment = () => {
-    const [n] = counterStore.get()
-    counterStore.set([n + 1])
+  try {
+    documents = await api.fetchAllDocuments();
+  } catch {
+    return <div>Couldn't connect to server!</div>;
   }
 
   return (
     <div>
-      <h1>HomePage</h1>
-      <CounterDisplay store={counterStore} />
-      <button onClick={increment}>Increment</button>
+      <h1>Documents</h1>
+      <ul>
+        {documents.map(({ Title }) => <li>{Title}</li>)}
+      </ul>
     </div>
   )
 }

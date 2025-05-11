@@ -3,6 +3,7 @@ import { DocumentStore } from "@/modules/document/document.store";
 import type { LayoutStore } from "../../home.store";
 
 import styles from '../../home.module.css'
+import { getRelativeTimeFromNow } from "@/lib/date/date";
 
 export class DocumentTable extends ReactiveComponent<DocumentStore> {
   private layoutStore: LayoutStore;
@@ -47,7 +48,7 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
             <tr className={`row ${styles.document}`}>
               <td className="cell">
                 <strong>{item.Title}</strong>
-                <div>Created: {item.CreatedAt}</div>
+                <div>Created: {getRelativeTimeFromNow(item.CreatedAt)}</div>
                 <div>Version: {item.Version}</div>
               </td>
               <td className="cell">

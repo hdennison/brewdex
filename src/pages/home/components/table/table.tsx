@@ -25,6 +25,7 @@ export class DocumentTable extends ReactiveComponent<DocumentStore> {
         className="table"
         aria-labelledby="page-heading"
         data-layout={this.layoutStore.get()}
+        data-testid="documents-table"
         // this CSS var needs to match the amount of columns in the table
         style="--columns: 3"
       />

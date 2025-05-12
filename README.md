@@ -25,18 +25,19 @@ A real-time, modular web application built with Vite, TypeScript, and a custom J
 - **Real‑Time Notifications**: WebSocket‑powered notification system.
 - **Modular Architecture**: Encapsulated modules and stores.
 - **CSS Modules**: Scoped, maintainable styling.
-- **Comprehensive Tests**: Vitest + Testing Library + Fishery factories.
+- **Comprehensive Tests**: Vitest + Testing Library + Fishery factories. Playwright for end‑to‑end tests (E2E).
 - **Type‑Safe**: End‑to‑end TypeScript support.
 
 ---
 
 ## Tech Stack
 
-- **[Vite](https://vitejs.dev/)** for fast bundling and dev server
-- **TypeScript** for static typing
-- **Custom JSX Renderer** in `@/lib/reactive-component`
-- **Vitest** & **@testing-library/dom** for unit and integration tests
-- **Fishery** for data factories in tests
+- **[Vite](https://vitejs.dev/)** for fast bundling and dev server.
+- **TypeScript** for static typing.
+- **Custom JSX Renderer** in `@/lib/reactive-component`, no React.
+- **Vitest** & **@testing-library/dom** for unit and integration tests.
+- **Fishery** for data factories in tests.
+- **Playwright** for end-to-end tests.
 
 ---
 
@@ -64,20 +65,23 @@ npm run build
 
 The production-ready files are generated in the `dist/` directory.
 
+> **Disclaimer**  
+> Even the build process will work, the output files cannot be used in production as I'm using hardcoded URLs for the BE server.
+
 ---
 
 ## Testing
 
-Run the full test suite:
+Run the full unit/integration test suite:
 
 ```bash
-npm run test
+npm run test:run
 ```
 
 This executes all Vitest specs, including:
 
-- Component unit tests (`.unit.tsx`)
-- Integration tests for notifications
+- Component unit tests
+- Integration tests
 - Factory‑driven tests using `fishery`
 
 To watch tests interactively:
@@ -85,3 +89,25 @@ To watch tests interactively:
 ```bash
 npm run test:watch
 ```
+
+---
+
+Run E2E tests
+
+Make sure your Vite server is running on the default `http://localhost:5173/`
+
+```bash
+npm run test:e2e
+```
+
+This executes E2E tests in headless Chrome
+
+If you want to see the tests run in a browser, run:
+
+```bash
+npm run test:e2e --ui
+```
+
+> **Disclaimer**  
+> Notifications functionality is not E2E tested, as I need to mock the WS server.  
+> In theory, this can be done with Mock Service Worker (MSW), but I didn't have time to do it.

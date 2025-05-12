@@ -10,17 +10,17 @@ export class DocumentService {
   async fetchAllDocuments(): Promise<Doc[]> {
     const url = `${this.baseUrl}/documents`;
 
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const data = (await response.json()) as Doc[];
-      return data;
-    } catch (error: unknown) {
-      // console.error(error instanceof Error ? error.message : String(error));
+    // Perform the request
+    const response = await fetch(url);
 
-      return [];
+    // Throw if the response is not OK, so errors bubble up
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch documents: ${response.status} ${response.statusText}`
+      );
     }
+
+    // Parse and return the list of documents
+    return (await response.json()) as Doc[];
   }
 }

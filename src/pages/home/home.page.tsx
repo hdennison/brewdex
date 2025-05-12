@@ -4,16 +4,17 @@ import { ModalStore } from "@/lib/modal/modal.store";
 import { DocumentService } from "@/modules/document/document.service";
 import { DocumentStore } from "@/modules/document/document.store";
 import { DocumentForm } from "./components/form/form";
+import { DocumentFormStore } from "./components/form/form.store";
 import { DocumentTable } from "./components/table/table";
 import { formToDocument } from "./components/form/formatter";
 import { LayoutControls } from "./components/layout-controls/layout-controls";
 import { SortingSelect } from "./components/sort/select";
 import { LayoutStore } from "./home.store";
+import { Notifications } from "./components/notifications/notifications";
+import type { FormOutput } from "./components/form/types";
 import type { SortingCriteria } from "@/modules/document/types";
 
 import styles from './home.module.css';
-import { DocumentFormStore } from "./components/form/form.store";
-import type { FormOutput } from "./components/form/types";
 
 export default async function HomePage() {
   const api = new DocumentService();
@@ -63,6 +64,7 @@ export default async function HomePage() {
         title="Add Document"
         content={formComponent.getElement()}
       />
+      <Notifications />
     </>
   );
 }

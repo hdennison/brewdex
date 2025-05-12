@@ -34,6 +34,76 @@
   background-color: #f4f5f7;
 }
 
+.notificationsContainer {
+  position: fixed;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+.notificationsContent {
+  /* @TODO theme.css grayscale */
+  background: #f4f5f7;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radii-xl);
+  /* @TODO theme.css grayscale */
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.notificationsContent {
+  /* no initial transform here; keyframe will handle it */
+  transform-origin: center center;
+}
+
+.notificationsContentVisible {
+  /* play our bounce animation once, and keep the final state */
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+/* keyframes: 0 → overshoot → settle */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icoWrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.badge {
+  --size: 22px;
+  /* @TODO: a log of magic numbers to be revised!  */
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 9px;
+  padding: var(--space-base) var(--space-base);
+  border-radius: var(--radii-full);
+  background: var(--color-accent);
+  border: 2px solid currentColor;
+  /* TODO: do not use primitive colors directly! */
+  color: var(--color-white);
+  min-width: var(--size);
+  height: var(--size);
+  text-align: center;
+  position: absolute;
+  top: -12px;
+  left: calc(100% - 0.75em);
+}
+
 /* TODO find a better way to manage MediaQueries */
 @media screen and (min-width: 640px) {
   .main {

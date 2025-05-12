@@ -49,4 +49,6 @@
 
   /* Radii */
   --radii-md: var(--space-base);
+  --radii-xl: var(--space-xl);
+  --radii-full: 9999px;
 }

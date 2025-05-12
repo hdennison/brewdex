@@ -1,9 +1,11 @@
 import listIconUrl from '@/lib/icon/svg/list.svg?url';
 import gridIconUrl from '@/lib/icon/svg/grid.svg?url';
+import bellIconUrl from '@/lib/icon/svg/bell.svg?url';
 
 const icons = {
+  'bell': bellIconUrl,
   'list': listIconUrl,
-  'grid': gridIconUrl
+  'grid': gridIconUrl,
 }
 
 export type IconName = keyof typeof icons;

@@ -1,5 +1,3 @@
-// src/utils/date.ts
-
 /**
  * Returns a localized, human-readable relative time string
  * (e.g. "3 days ago", "in 2 hours", or "now") for a given timestamp.
